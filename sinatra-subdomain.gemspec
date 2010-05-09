@@ -28,6 +28,11 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Separate routes for subdomains on Sinatra}
+  s.test_files = [
+    "test/multiple_tlds_test.rb",
+     "test/subdomain_test.rb",
+     "test/test_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
