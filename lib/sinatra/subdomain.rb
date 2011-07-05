@@ -7,7 +7,7 @@ module Sinatra
       def subdomain
         uri = URI.parse("http://#{request.env["HTTP_HOST"]}")
         parts = uri.host.split(".")
-        parts.pop(options.tld_size + 1)
+        parts.pop(settings.tld_size + 1)
         parts.first
       end
     end
