@@ -8,7 +8,7 @@ require "sinatra/subdomain"
 Capybara.default_driver = :selenium
 
 class Test::Unit::TestCase
-  include Capybara
+  include Capybara::DSL
 end
 
 class SampleApp < Sinatra::Base
