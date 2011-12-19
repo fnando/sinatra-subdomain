@@ -23,6 +23,14 @@
     end
   end
 
+If you're not building a classic app, make sure to register Sinatra::Subdomain yourself:
+
+  class Application < Sinatra::Base
+    register Sinatra::Subdomain 
+    
+    ...
+  end
+
 By default, sinatra-subdomain will consider 1 TLD as in <tt>example.com</tt>.
 You can specify your TLD size for domains like <tt>example.com.br</tt> or <tt>example.co.uk</tt>.
 
