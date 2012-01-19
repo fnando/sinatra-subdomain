@@ -1,25 +1,45 @@
 require "test_helper"
 
 class SubdomainTest < Test::Unit::TestCase
-  def setup
-    Capybara.app = SampleApp
+  App = Class.new(Sinatra::Base) do
+    register Sinatra::Subdomain
+
+    subdomain :foo do
+      get("/") { "set: #{subdomain}" }
+    end
+
+    subdomain do
+      get("/") { "any: #{subdomain}" }
+    end
+
+    get("/") { "root" }
+  end
+
+  def app
+    App
   end
 
   def test_specified_subdomain
-    visit "http://foo.smackaho.st:9887/"
-    assert page.has_content? "set: foo"
+    header "HOST", "foo.example.org"
+    get "/"
+
+    assert_equal "set: foo", last_response.body
   end
 
   def test_any_subdomain
-    visit "http://status.smackaho.st:9887/"
-    assert page.has_content? "any: status"
+    header "HOST", "status.example.org"
+    get "/"
+    assert_equal "any: status", last_response.body
 
-    visit "http://mail.smackaho.st:9887/"
-    assert page.has_content? "any: mail"
+    header "HOST", "mail.example.org"
+    get "/"
+    assert_equal "any: mail", last_response.body
   end
 
   def test_root
-    visit "http://smackaho.st:9887/"
-    assert page.has_content? "root"
+    header "HOST", "example.org"
+    get "/"
+
+    assert_equal "root", last_response.body
   end
 end

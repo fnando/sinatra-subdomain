@@ -1,25 +1,46 @@
 require "test_helper"
 
 class MultipleTldsTest < Test::Unit::TestCase
-  def setup
-    Capybara.app = MultipleTldsApp
+  App = Class.new(Sinatra::Base) do
+    register Sinatra::Subdomain
+    set :tld_size, 2
+
+    subdomain :foo do
+      get("/") { "set: #{subdomain}" }
+    end
+
+    subdomain do
+      get("/") { "any: #{subdomain}" }
+    end
+
+    get("/") { "root" }
+  end
+
+  def app
+    App
   end
 
   def test_specified_subdomain
-    visit "http://foo.smackaho.smackaho.st:9887/"
-    assert page.has_content? "set: foo"
+    header "HOST", "foo.example.com.br"
+    get "/"
+
+    assert_equal "set: foo", last_response.body
   end
 
   def test_any_subdomain
-    visit "http://status.smackaho.smackaho.st:9887/"
-    assert page.has_content? "any: status"
+    header "HOST", "status.example.com.br"
+    get "/"
+    assert_equal "any: status", last_response.body
 
-    visit "http://mail.smackaho.smackaho.st:9887/"
-    assert page.has_content? "any: mail"
+    header "HOST", "mail.example.com.br"
+    get "/"
+    assert_equal "any: mail", last_response.body
   end
 
   def test_root
-    visit "http://smackaho.smackaho.st:9887/"
-    assert page.has_content? "root"
+    header "HOST", "example.com.br"
+    get "/"
+
+    assert_equal "root", last_response.body
   end
 end
