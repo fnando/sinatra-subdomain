@@ -1,24 +1,27 @@
+class SubdomainTestApp < Sinatra::Base
+  register Sinatra::Subdomain    
+
+  subdomain :foo do
+    get("/") { "set: #{subdomain}" }
+    get("/about") { "set: about #{subdomain}" }
+  end
+
+  subdomain do
+    get("/") { "any: #{subdomain}" }
+    get("/about") { "any: about #{subdomain}" }
+  end
+
+  get("/") { "root" }
+  get("/about") { "about" }
+end
+
 shared_examples_for "subdomain" do
   def app
     @app ||= begin
       _tld = tld
 
-      @app = Class.new(Sinatra::Base) do
-        register Sinatra::Subdomain
+      @app = Class.new(SubdomainTestApp) do
         set :tld_size, _tld.split(".").size - 1
-
-        subdomain :foo do
-          get("/") { "set: #{subdomain}" }
-          get("/about") { "set: about #{subdomain}" }
-        end
-
-        subdomain do
-          get("/") { "any: #{subdomain}" }
-          get("/about") { "any: about #{subdomain}" }
-        end
-
-        get("/") { "root" }
-        get("/about") { "about" }
       end
     end
   end

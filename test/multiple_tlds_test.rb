@@ -1,7 +1,7 @@
 require "test_helper"
 
 class MultipleTldsTest < Test::Unit::TestCase
-  App = Class.new(Sinatra::Base) do
+  class MultipleTldsTestApp < Sinatra::Base
     register Sinatra::Subdomain
     set :tld_size, 2
 
@@ -17,7 +17,7 @@ class MultipleTldsTest < Test::Unit::TestCase
   end
 
   def app
-    App
+    MultipleTldsTestApp
   end
 
   def test_specified_subdomain

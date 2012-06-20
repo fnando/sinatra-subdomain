@@ -1,7 +1,7 @@
 require "test_helper"
 
 class SubdomainTest < Test::Unit::TestCase
-  App = Class.new(Sinatra::Base) do
+  class SubdomainTestApp < Sinatra::Base
     register Sinatra::Subdomain
 
     subdomain :foo do
@@ -16,7 +16,7 @@ class SubdomainTest < Test::Unit::TestCase
   end
 
   def app
-    App
+    SubdomainTestApp
   end
 
   def test_specified_subdomain
