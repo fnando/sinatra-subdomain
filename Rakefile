@@ -7,3 +7,6 @@ Rake::TestTask.new do |t|
   t.test_files = FileList["test/*_test.rb"]
   t.verbose = true
 end
+
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new
