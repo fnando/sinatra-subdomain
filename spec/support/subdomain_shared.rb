@@ -74,7 +74,7 @@ shared_examples_for "subdomain" do
     end
   end
 
-  context "when host is referenced by IP" do
+  context "when host is referenced by IPv4" do
     it "renders no subdomain root page" do
       header "HOST", "127.0.0.1"
       get "/"
@@ -84,6 +84,22 @@ shared_examples_for "subdomain" do
 
     it "renders no subdomain about page" do
       header "HOST", "127.0.0.1"
+      get "/about"
+
+      last_response.body.should eql("about")
+    end
+  end
+
+  context "when host is referenced by IP and port" do
+    it "renders no subdomain root page" do
+      header "HOST", "127.0.0.1:4567"
+      get "/"
+
+      last_response.body.should eql("root")
+    end
+
+    it "renders no subdomain about page" do
+      header "HOST", "127.0.0.1:4567"
       get "/about"
 
       last_response.body.should eql("about")

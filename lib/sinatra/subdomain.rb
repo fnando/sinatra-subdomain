@@ -10,11 +10,11 @@ module Sinatra
 
     module Helpers
       def subdomain
-        host = request.env["HTTP_HOST"]
+        uri = URI.parse("http://#{request.env["HTTP_HOST"]}")
+        host = uri.host
         return nil if (host =~ Resolv::IPv4::Regex || host =~ Resolv::IPv6::Regex)
 
-        uri = URI.parse("http://#{host}")
-        parts = uri.host.split(".")
+        parts = host.split(".")
         parts.pop(settings.tld_size + 1)
         parts.first
       end
