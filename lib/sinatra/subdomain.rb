@@ -1,5 +1,5 @@
 require "sinatra/base"
-require "uri"
+require "addressable/uri"
 
 module Sinatra
   module Subdomain
@@ -9,7 +9,7 @@ module Sinatra
 
     module Helpers
       def subdomain
-        uri = URI.parse("http://#{request.env["HTTP_HOST"]}")
+        uri = Addressable::URI.parse("http://#{request.env["HTTP_HOST"]}")
         parts = uri.host.split(".")
         parts.pop(settings.tld_size + 1)
         parts.first
