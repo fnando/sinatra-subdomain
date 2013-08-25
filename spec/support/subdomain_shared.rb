@@ -70,4 +70,20 @@ shared_examples_for "subdomain" do
       last_response.body.should eql("about")
     end
   end
+
+  context "when an underscore is included in the subdomain" do
+    it "renders root page" do
+      header "HOST", "example_domain#{tld}"
+      get "/"
+
+      last_response.body.should eql("root")
+    end
+
+    it "renders about page" do
+      header "HOST", "example_domain#{tld}"
+      get "/about"
+
+      last_response.body.should eql("about")
+    end
+  end
 end
