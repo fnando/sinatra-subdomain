@@ -7,6 +7,11 @@ shared_examples_for "subdomain" do
         register Sinatra::Subdomain
         set :tld_size, _tld.split(".").size - 1
 
+        subdomain "foo.bar" do
+          get("/") { "multiple: #{subdomain}" }
+          get("/about") { "multiple: about #{subdomain}" }
+        end
+
         subdomain :foo do
           get("/") { "set: #{subdomain}" }
           get("/about") { "set: about #{subdomain}" }
@@ -20,6 +25,22 @@ shared_examples_for "subdomain" do
         get("/") { "root" }
         get("/about") { "about" }
       end
+    end
+  end
+
+  context "when a multiple subdomain is required" do
+    it "renders root page" do
+      header "HOST", "foo.bar.example#{tld}"
+      get "/"
+
+      last_response.body.should eql("multiple: foo.bar")
+    end
+
+    it "renders about page" do
+      header "HOST", "foo.bar.example#{tld}"
+      get "/about"
+
+      last_response.body.should eql("multiple: about foo.bar")
     end
   end
 
