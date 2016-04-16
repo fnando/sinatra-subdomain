@@ -1,5 +1,11 @@
 # Sinatra Subdomain
 
+[![Travis-CI](https://travis-ci.org/fnando/sinatra-subdomain.png)](https://travis-ci.org/fnando/sinatra-subdomain)
+[![Code Climate](https://codeclimate.com/github/fnando/sinatra-subdomain/badges/gpa.svg)](https://codeclimate.com/github/fnando/sinatra-subdomain)
+[![Test Coverage](https://codeclimate.com/github/fnando/sinatra-subdomain/badges/coverage.svg)](https://codeclimate.com/github/fnando/sinatra-subdomain/coverage)
+[![Gem](https://img.shields.io/gem/v/sinatra-subdomain.svg)](https://rubygems.org/gems/sinatra-subdomain)
+[![Gem](https://img.shields.io/gem/dt/sinatra-subdomain.svg)](https://rubygems.org/gems/sinatra-subdomain)
+
 ## Installation
 
 ```
