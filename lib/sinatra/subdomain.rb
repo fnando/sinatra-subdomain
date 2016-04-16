@@ -19,7 +19,7 @@ module Sinatra
       end
     end
 
-    def subdomain(expected_subdomain = true, &block)
+    def subdomain(expected_subdomain = true)
       ::Sinatra::Subdomain.tap do |mod|
         mod.app = self
         mod.subdomain = expected_subdomain
@@ -37,7 +37,7 @@ module Sinatra
       host =~ Resolv::IPv4::Regex || host =~ Resolv::IPv6::Regex
     end
 
-    def self.route_added(verb, path, block)
+    def self.route_added(verb, _path, _block)
       return unless subdomain && app
 
       routes = app.instance_variable_get("@routes")
