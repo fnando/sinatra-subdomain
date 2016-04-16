@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 sudo: false
-notifictions:
+notifications:
   email: false
 rvm:
 - 2.3.0
