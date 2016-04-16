@@ -1,5 +1,6 @@
 require "sinatra/base"
 require "uri"
+require "resolv"
 
 module Sinatra
   module Subdomain
@@ -10,6 +11,7 @@ module Sinatra
     module Helpers
       def subdomain
         uri = URI.parse("http://#{request.env["HTTP_HOST"]}")
+        return if Sinatra::Subdomain.ip_address?(uri.host)
         parts = uri.host.split(".")
         parts.pop(settings.tld_size + 1)
         parts.first
@@ -28,6 +30,10 @@ module Sinatra
         mod.app = nil
         mod.subdomain = nil
       end
+    end
+
+    def self.ip_address?(host)
+      host =~ Resolv::IPv4::Regex || host =~ Resolv::IPv6::Regex
     end
 
     def self.route_added(verb, path, block)

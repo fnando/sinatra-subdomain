@@ -1,25 +1,9 @@
 module SubdomainTests
   def app
-    @app ||= begin
-      _tld = tld
+    _tld = tld
 
-      @app = Class.new(Sinatra::Base) do
-        register Sinatra::Subdomain
-        set :tld_size, _tld.split(".").size - 1
-
-        subdomain :foo do
-          get("/") { "set: #{subdomain}" }
-          get("/about") { "set: about #{subdomain}" }
-        end
-
-        subdomain do
-          get("/") { "any: #{subdomain}" }
-          get("/about") { "any: about #{subdomain}" }
-        end
-
-        get("/") { "root" }
-        get("/about") { "about" }
-      end
+    Class.new(App) do
+      set :tld_size, _tld.split(".").size - 1
     end
   end
 
