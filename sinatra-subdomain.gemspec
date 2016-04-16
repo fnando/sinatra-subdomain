@@ -1,6 +1,4 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "sinatra/subdomain/version"
+require "./lib/sinatra/subdomain/version"
 
 Gem::Specification.new do |s|
   s.name        = "sinatra-subdomain"
@@ -18,9 +16,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "sinatra"
-  s.add_development_dependency "rspec"
+  s.add_development_dependency "minitest-utils"
   s.add_development_dependency "rake"
   s.add_development_dependency "rack-test"
-  s.add_development_dependency "pry"
-  s.add_development_dependency "awesome_print"
+  s.add_development_dependency "pry-meta"
 end
