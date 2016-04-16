@@ -50,6 +50,20 @@ module SubdomainTests
 
         assert_equal "about",last_response.body
       end
+
+      test "when multi-subdomain is required - renders root page" do
+        header "HOST", "foo.bar.example#{tld}"
+        get "/"
+
+        assert_equal "multiple: foo.bar",last_response.body
+      end
+
+      test "when multi-subdomain is required - renders about page" do
+        header "HOST", "foo.bar.example#{tld}"
+        get "/about"
+
+        assert_equal "multiple: about foo.bar",last_response.body
+      end
     end
   end
 end

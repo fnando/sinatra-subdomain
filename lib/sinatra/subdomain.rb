@@ -14,7 +14,8 @@ module Sinatra
         return if Sinatra::Subdomain.ip_address?(uri.host)
         parts = uri.host.split(".")
         parts.pop(settings.tld_size + 1)
-        parts.first
+
+        parts.empty? ? nil : parts.join(".")
       end
     end
 

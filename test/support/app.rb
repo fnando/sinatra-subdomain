@@ -6,6 +6,11 @@ class App < Sinatra::Base
     get("/about") { "set: about #{subdomain}" }
   end
 
+  subdomain "foo.bar" do
+    get("/") { "multiple: #{subdomain}" }
+    get("/about") { "multiple: about #{subdomain}" }
+  end
+
   subdomain do
     get("/") { "any: #{subdomain}" }
     get("/about") { "any: about #{subdomain}" }
