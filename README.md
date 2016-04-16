@@ -1,53 +1,70 @@
-= Sinatra Subdomain
+# Sinatra Subdomain
 
-== Installation
+## Installation
 
-  sudo gem install sinatra-subdomain
+```
+gem install sinatra-subdomain
+```
 
-== Usage
+## Usage
 
-  require "sinatra"
-  require "sinatra/subdomain"
+```ruby
+require "sinatra"
+require "sinatra/subdomain"
 
-  # Specify which subdomain you want
-  subdomain :foo do
-    get '/' do
-      "render page for FOO"
-    end
+# Specify which subdomain you want
+subdomain :foo do
+  get '/' do
+    "render page for FOO"
   end
+end
 
-  # If any subdomain is set
-  subdomain do
-    get '/' do
-      "render page for #{subdomain} subdomain"
-    end
+# If any subdomain is set
+subdomain do
+  get '/' do
+    "render page for #{subdomain} subdomain"
   end
+end
+```
 
 If you're not building a classic app, make sure to register Sinatra::Subdomain yourself:
 
-  class Application < Sinatra::Base
-    register Sinatra::Subdomain 
-    
-    ...
+```ruby
+require "sinatra"
+require "sinatra/subdomain"
+
+# Specify which subdomain you want
+subdomain :foo do
+  get '/' do
+    "render page for FOO"
   end
+end
+
+# If any subdomain is set
+subdomain do
+  get '/' do
+    "render page for #{subdomain} subdomain"
+  end
+end
+```
 
 By default, sinatra-subdomain will consider 1 TLD as in <tt>example.com</tt>.
 You can specify your TLD size for domains like <tt>example.com.br</tt> or <tt>example.co.uk</tt>.
 
-  require "sinatra"
-  require "sinatra/subdomain"
+```ruby
+require "sinatra"
+require "sinatra/subdomain"
 
-  set :tld_size, 2
+set :tld_size, 2
+```
 
 This extension was based on http://github.com/akahn/sinatra-subdomain/
 
-= License
+# License
 
 (The MIT License)
 
-Copyright © 2010:
-
-* Nando Vieira (http://simplesideias.com.br)
+Copyright © 2010 - Nando Vieira (http://nandovieira.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

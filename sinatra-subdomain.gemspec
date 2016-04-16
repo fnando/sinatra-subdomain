@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.email       = ["fnando.vieira@gmail.com"]
   s.homepage    = "http://rubygems.org/gems/sinatra-subdomain"
   s.summary     = "Separate routes for subdomains on Sinatra"
+  s.license     = "MIT"
   s.description = s.summary
 
   s.files         = `git ls-files`.split("\n")
