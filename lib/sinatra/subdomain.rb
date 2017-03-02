@@ -54,7 +54,11 @@ module Sinatra
         end
       end
 
-      last_route[2] << condition
+      if Gem::Version.new(Sinatra::VERSION) >= Gem::Version.new("2.0.0.beta1")
+        last_route[1] << condition
+      else
+        last_route[2] << condition
+      end
     end
 
     def self.registered(app)
