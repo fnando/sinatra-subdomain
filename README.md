@@ -20,14 +20,14 @@ require "sinatra/subdomain"
 
 # Specify which subdomain you want
 subdomain :foo do
-  get '/' do
+  get "/" do
     "render page for FOO"
   end
 end
 
 # If any subdomain is set
 subdomain do
-  get '/' do
+  get "/" do
     "render page for #{subdomain} subdomain"
   end
 end
@@ -44,14 +44,14 @@ class MyApp < Sinatra::Base
   register Sinatra::Subdomain
 
   subdomain :foo do
-    get '/' do
+    get "/" do
       "render page for FOO"
     end
   end
 
   # If any subdomain is set
   subdomain do
-    get '/' do
+    get "/" do
       "render page for #{subdomain} subdomain"
     end
   end
