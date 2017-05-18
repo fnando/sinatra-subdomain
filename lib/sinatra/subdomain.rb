@@ -47,14 +47,24 @@ module Sinatra
       condition = app.instance_eval do
         generate_method :subdomain do
           if expected == true
-            subdomain != nil
+            !subdomain.nil?
           else
             subdomain.to_s == expected.to_s
           end
         end
       end
 
-      last_route[2] << condition
+      add_condition(last_route, condition)
+    end
+
+    if Gem::Requirement.create(["~>2.0"]).satisfied_by?(Gem::Version.create(Sinatra::VERSION))
+      def self.add_condition(last_route, condition)
+        last_route[1] << condition
+      end
+    else
+      def self.add_condition(last_route, condition)
+        last_route[2] << condition
+      end
     end
 
     def self.registered(app)
