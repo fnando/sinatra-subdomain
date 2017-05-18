@@ -68,8 +68,6 @@ require "sinatra/subdomain"
 set :tld_size, 2
 ```
 
-This extension was based on http://github.com/akahn/sinatra-subdomain/
-
 # License
 
 (The MIT License)
