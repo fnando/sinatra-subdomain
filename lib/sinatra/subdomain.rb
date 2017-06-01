@@ -37,20 +37,29 @@ module Sinatra
       host =~ Resolv::IPv4::Regex || host =~ Resolv::IPv6::Regex
     end
 
+    def self.match_subdomain?(expected, actual)
+      expected.any? do |expected_subdomain|
+        case expected_subdomain
+        when true
+          !actual.nil?
+        when Symbol
+          actual.to_s == expected_subdomain.to_s
+        else
+          expected_subdomain === actual
+        end
+      end
+    end
+
     def self.route_added(verb, _path, _block)
       return unless subdomain && app
 
       routes = app.instance_variable_get("@routes")
       last_route = routes[verb].last
-      expected = subdomain
+      expected = [subdomain].flatten.compact
 
       condition = app.instance_eval do
         generate_method :subdomain do
-          if expected == true
-            !subdomain.nil?
-          else
-            subdomain.to_s == expected.to_s
-          end
+          ::Sinatra::Subdomain.match_subdomain?(expected, subdomain)
         end
       end
 
