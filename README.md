@@ -58,6 +58,27 @@ class MyApp < Sinatra::Base
 end
 ```
 
+You can also pass an array or regular expressions to match subdomains:
+
+```ruby
+class MyApp < Sinatra::Base
+  register Sinatra::Subdomain
+
+  subdomain [:foo, :bar, :zaz] do
+    get "/" do
+      "render page for #{subdomain}"
+    end
+  end
+
+  # Matches www, www1, www2, etc.
+  subdomain /\Awww\d*\z/ do
+    get "/" do
+      "render page for #{subdomain} subdomain"
+    end
+  end
+end
+```
+
 By default, sinatra-subdomain will consider 1 TLD as in <tt>example.com</tt>.
 You can specify your TLD size for domains like <tt>example.com.br</tt> or <tt>example.co.uk</tt>.
 

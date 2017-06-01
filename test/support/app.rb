@@ -11,6 +11,14 @@ class App < Sinatra::Base
     get("/about") { "multiple: about #{subdomain}" }
   end
 
+  subdomain [:a, :b] do
+    get("/") { "array: #{subdomain}" }
+  end
+
+  subdomain /\A(c|d)\z/ do
+    get("/") { "regex: #{subdomain}" }
+  end
+
   subdomain do
     get("/") { "any: #{subdomain}" }
     get("/about") { "any: about #{subdomain}" }
