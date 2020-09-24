@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class SubdomainsTest < Minitest::Test
@@ -31,5 +33,12 @@ class SubdomainsTest < Minitest::Test
     get "/"
 
     assert_equal "regex: d", last_response.body
+  end
+
+  test "renders matched subdomain (e)" do
+    header "HOST", "e.example.com"
+    get "/"
+
+    assert_equal "proc: e", last_response.body
   end
 end

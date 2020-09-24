@@ -6,13 +6,13 @@ notifications:
   email: false
 
 rvm:
-  - 2.2.6
-  - 2.3.3
-  - 2.4.0
+  - 2.7.1
+  - 2.6.5
 
 gemfile:
-  - gemfiles/sinatra_2.gemfile
-  - gemfiles/sinatra_1.gemfile
+  - gemfiles/sinatra_2_1.gemfile
+  - gemfiles/sinatra_2_0.gemfile
+  - gemfiles/sinatra_1_4.gemfile
 
 env:
   global:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class App < Sinatra::Base
   register Sinatra::Subdomain
 
@@ -15,8 +17,12 @@ class App < Sinatra::Base
     get("/") { "array: #{subdomain}" }
   end
 
-  subdomain /\A(c|d)\z/ do
+  subdomain(/\A(c|d)\z/) do
     get("/") { "regex: #{subdomain}" }
+  end
+
+  subdomain(->(actual) { actual == "e" }) do
+    get("/") { "proc: #{subdomain}" }
   end
 
   subdomain do

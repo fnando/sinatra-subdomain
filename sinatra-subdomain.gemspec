@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./lib/sinatra/subdomain/version"
 
 Gem::Specification.new do |s|
@@ -10,16 +12,21 @@ Gem::Specification.new do |s|
   s.summary     = "Separate routes for subdomains on Sinatra"
   s.license     = "MIT"
   s.description = s.summary
+  s.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f) }
+  s.executables   = `git ls-files -- bin/*`
+                    .split("\n")
+                    .map {|f| File.basename(f) }
   s.require_paths = ["lib"]
 
   s.add_dependency "sinatra"
   s.add_development_dependency "minitest-utils"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "rack-test"
   s.add_development_dependency "pry-meta"
-  s.add_development_dependency "codeclimate-test-reporter"
+  s.add_development_dependency "rack-test"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rubocop"
+  s.add_development_dependency "rubocop-fnando"
+  s.add_development_dependency "simplecov"
 end

@@ -1,0 +1,23 @@
+---
+inherit_gem:
+  rubocop-fnando: .rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+
+Naming/FileName:
+  Exclude:
+    - lib/sinatra-subdomain.rb
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false

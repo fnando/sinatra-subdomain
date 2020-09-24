@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sinatra/base"
 require "uri"
 require "resolv"
@@ -8,10 +10,15 @@ module Sinatra
       attr_accessor :app, :subdomain
     end
 
+    SINATRA_V2 = Gem::Requirement.create([">=2.0"]).satisfied_by?(
+      Gem::Version.create(Sinatra::VERSION)
+    )
+
     module Helpers
       def subdomain
-        uri = URI.parse("http://#{request.env["HTTP_HOST"]}")
+        uri = URI.parse("http://#{request.env['HTTP_HOST']}")
         return if Sinatra::Subdomain.ip_address?(uri.host)
+
         parts = uri.host.split(".")
         parts.pop(settings.tld_size + 1)
 
@@ -19,6 +26,17 @@ module Sinatra
       end
     end
 
+    # This is how this works:
+    #
+    # 1. Whenever you call `subdomain(&block)`, this is the method that's going
+    #    to be executed.
+    # 2. For each `subdomain` block, we set the app and subdomain condition as
+    #    `Sinatra::Subdomain.app` and `Sinatra::Subdomain.subdomain`.
+    # 3. Then, we yield the block, which will add the routes as needed.
+    # 4. After each route is added, Sinatra triggers a hook called
+    #    `:route_added`, handled by the `routed_added` method below.
+    # 5. The `routed_added` method will hijack the routes, adding the subdomain
+    #    condition.
     def subdomain(expected_subdomain = true)
       ::Sinatra::Subdomain.tap do |mod|
         mod.app = self
@@ -45,7 +63,7 @@ module Sinatra
         when Symbol
           actual.to_s == expected_subdomain.to_s
         else
-          expected_subdomain === actual
+          expected_subdomain === actual # rubocop:disable Style/CaseEquality
         end
       end
     end
@@ -58,7 +76,7 @@ module Sinatra
       expected = [subdomain].flatten.compact
 
       condition = app.instance_eval do
-        generate_method :subdomain do
+        generate_method :subdomain_matcher do
           ::Sinatra::Subdomain.match_subdomain?(expected, subdomain)
         end
       end
@@ -66,7 +84,7 @@ module Sinatra
       add_condition(last_route, condition)
     end
 
-    if Gem::Requirement.create(["~>2.0"]).satisfied_by?(Gem::Version.create(Sinatra::VERSION))
+    if SINATRA_V2
       def self.add_condition(last_route, condition)
         last_route[1] << condition
       end

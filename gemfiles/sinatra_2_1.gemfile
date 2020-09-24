@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+gemspec path: ".."
+
+gem "sinatra", "~> 2.1.0"

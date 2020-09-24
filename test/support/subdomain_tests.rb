@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SubdomainTests
   def app
     current_tld = tld
